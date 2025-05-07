@@ -3,10 +3,10 @@ import type { Config } from 'tailwindcss';
 const config: Config = {
   darkMode: 'class',
   content: [
-    './app/**/*.{ts,tsx}',
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}', // Looks correct for src/app
+    './pages/**/*.{ts,tsx}', // Only needed if using the old pages directory
+    './components/**/*.{ts,tsx}', // Looks correct for src/components
+    './src/**/*.{ts,tsx}', // This is a broad catch-all, should include everything under src
   ],
   theme: {
     container: {
