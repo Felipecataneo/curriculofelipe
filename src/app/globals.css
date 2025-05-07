@@ -1,10 +1,8 @@
 /* src/app/globals.css */
-@import "tailwindcss";
-@import "tw-animate-css"; /* Mantenha se você pretende usar outras animações desta biblioteca */
+@import "tailwindcss"; /* Importa o Tailwind CSS v4 engine */
+@import "tw-animate-css"; 
 
-/* REMOVA: @custom-variant dark (&:is(.dark *)); */
-/* REMOVA: @theme inline { ... } */
-
+/* Definições de variáveis CSS Globais (Cores, Raio, etc.) */
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -22,6 +20,7 @@
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
   --destructive: oklch(0.577 0.245 27.325);
+  /* --destructive-foreground: oklch(valor); -> Defina se for usar */
   --border: oklch(0.929 0.013 255.508);
   --input: oklch(0.929 0.013 255.508);
   --ring: oklch(0.704 0.04 256.788);
@@ -38,6 +37,25 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+
+  /* Cores para o LinkedIn Cube (pode ajustar conforme seu tema) */
+  --linkedin-cube-face-bg: oklch(0.89 0.16 195.21 / 0.3); /* Ex: brand-cyan-light com 30% alfa */
+  --linkedin-cube-face-border: oklch(0.69 0.19 220.93 / 0.7); /* Ex: brand-cyan-DEFAULT com 70% alfa */
+  --linkedin-icon-color: oklch(0.65 0.19 249.96); /* Ex: brand-blue-DEFAULT */
+
+  /* Outras variáveis de cor da sua marca (já presentes no seu config) */
+  --color-brand-cyan-light: #67e8f9;
+  --color-brand-cyan-DEFAULT: #0ea5e9;
+  --color-brand-cyan-dark: #0891b2;
+  --color-brand-blue-light: #60a5fa;
+  --color-brand-blue-DEFAULT: #3b82f6;
+  --color-brand-blue-dark: #2563eb;
+  --color-brand-gray-darkest: #111827;
+  --color-brand-gray-dark: #1f2937;
+  --color-brand-gray-medium: #374151;
+  --color-brand-gray-light: #4b5563;
+  --color-brand-gray-lightest: #d1d5db;
+  --color-brand-gray-text: #e5e7eb;
 }
 
 .dark {
@@ -72,54 +90,107 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+
+  /* Cores para o LinkedIn Cube no modo escuro */
+  --linkedin-cube-face-bg: oklch(0.6 0.15 217.41 / 0.4); /* Ex: brand-cyan-dark com 40% alfa */
+  --linkedin-cube-face-border: oklch(0.69 0.19 220.93 / 0.8); /* Ex: brand-cyan-DEFAULT com 80% alfa */
+  --linkedin-icon-color: oklch(0.75 0.16 245.94); /* Ex: brand-blue-light */
 }
 
+/* Diretiva @theme para estender o tema do Tailwind */
+@theme {
+  /* Configurações do Container (substituindo theme.container do config) */
+  --screens-2xl: 1400px; /* Define o breakpoint 2xl */
+  /* Se precisar de padding específico para .container, pode ser feito em @layer components
+     Ex: --container-padding: 2rem; (se suportado para configurar o padding padrão)
+     Ou customizando a classe .container em @layer components
+  */
+
+  /* Border Radius (já usando var(--radius), Tailwind deve pegar) */
+  /* Se quiser aliases específicos como lg, md, sm no tema: */
+  --border-radius-lg: var(--radius);
+  --border-radius-md: calc(var(--radius) - 2px);
+  --border-radius-sm: calc(var(--radius) - 4px);
+  /* Isso permitiria usar rounded-lg, rounded-md, rounded-sm que usam esses valores do tema */
+
+  /* Keyframes (substituindo theme.extend.keyframes) */
+  @keyframes reverberate {
+    0%, 100% { transform: translateY(0) rotate(0deg) scaleY(1); }
+    25% { transform: translateY(-1.5px) rotate(-0.2deg) scaleY(1.03); }
+    50% { transform: translateY(0px) rotate(0deg) scaleY(1); }
+    75% { transform: translateY(1.5px) rotate(0.2deg) scaleY(1.03); }
+  }
+  @keyframes vibrateSimple {
+    0%, 100% { transform: translateY(0); }
+    20%, 80% { transform: translateY(-1px); }
+    40%, 60% { transform: translateY(1px); }
+  }
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes rotateCube {
+    0% { transform: rotateX(-20deg) rotateY(-30deg) rotateZ(0deg); }
+    100% { transform: rotateX(-20deg) rotateY(330deg) rotateZ(0deg); }
+  }
+
+  /* Animations (substituindo theme.extend.animation) */
+  /* Tailwind v4 gerará utilitários como animate-reverberate-on-hover */
+  --animation-reverberate-on-hover: reverberate 0.15s linear infinite;
+  --animation-vibrate-simple-on-hover: vibrateSimple 0.1s linear infinite;
+  --animation-fade-in-up: fadeInUp 0.3s ease-out forwards;
+  --animation-cube-spin: rotateCube 15s infinite linear; /* Animação para o cubo */
+
+  /* Background Images (já são padrão, não precisam ser estendidos aqui geralmente) */
+  /* Se você tivesse variáveis CSS para os gradientes, elas iriam em :root */
+}
+
+/* Camada Base (Estilos Globais e Resets) */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50; /* Usa as cores do tema via CSS vars */
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground; /* Usa as cores do tema via CSS vars */
+    /* Fontes podem ser definidas aqui também */
+    /* font-family: theme(fontFamily.sans); */ /* Exemplo se tivesse fontFamily.sans no @theme */
   }
 }
+
+/* Camada de Componentes (Estilos para componentes reutilizáveis) */
+@layer components {
+  /* Estilo para o título gradiente no Hero */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-brand-cyan-light)] to-[var(--color-brand-blue-light)];
+  }
+
+  /* Configuração do container, se necessário para padding específico */
+  /*
+  .container {
+    @apply px-8; // Força padding de 2rem (px-8) em todos os tamanhos
+    @screen 2xl {
+      max-width: theme(screens.2xl); // Usa o valor de --screens-2xl definido em @theme
+    }
+  }
+  */
+}
+
+/* Camada de Utilitários (Classes de utilidade customizadas) */
+/* Não precisamos mais dos utilitários de transform-style e backface-visibility aqui,
+   pois `transform-preserve-3d` e `backface-hidden` são padrão do Tailwind.
+*/
 
 /* Custom scrollbar (opcional, para navegadores WebKit) */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  /* Usando o valor hex da cor brand-gray.dark */
-  background: #1f2937;
+  background: var(--color-brand-gray-dark); /* Usando variável CSS */
 }
 ::-webkit-scrollbar-thumb {
-  /* Usando o valor hex da cor brand-cyan.DEFAULT */
-  background: #0ea5e9;
+  background: var(--color-brand-cyan-DEFAULT); /* Usando variável CSS */
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  /* Usando o valor hex da cor brand-cyan.light */
-  background: #67e8f9;
+  background: var(--color-brand-cyan-light); /* Usando variável CSS */
 }
-
-/* Estilo para o título gradiente no Hero */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan-light to-brand-blue-light;
-}
-
-/* REMOVA (se já definido no tailwind.config.ts): */
-/*
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeInUp {
-  animation: fadeInUp 0.5s ease-out forwards;
-}
-*/
