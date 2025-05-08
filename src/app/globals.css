@@ -76,95 +76,59 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --background: oklch(0.99 0.01 240); /* quase branco azulado */
+  --foreground: oklch(0.22 0.04 265); /* azul neutro para texto */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.22 0.04 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-  
-  /* LinkedIn Cube specific variables from second file */
-  --linkedin-cube-face-bg: oklch(0.89 0.16 195.21 / 0.3);
-  --linkedin-cube-face-border: oklch(0.69 0.19 220.93 / 0.7);
-  --linkedin-icon-color: oklch(0.65 0.19 249.96);
-  
-  /* Brand colors from second file */
-  --color-brand-cyan-light: #67e8f9;
-  --color-brand-cyan-DEFAULT: #0ea5e9;
-  --color-brand-cyan-dark: #0891b2;
-  --color-brand-blue-light: #60a5fa;
-  --color-brand-blue-DEFAULT: #3b82f6;
-  --color-brand-blue-dark: #2563eb;
-  --color-brand-gray-darkest: #111827;
-  --color-brand-gray-dark: #1f2937;
-  --color-brand-gray-medium: #374151;
-  --color-brand-gray-light: #4b5563;
-  --color-brand-gray-lightest: #d1d5db;
-  --color-brand-gray-text: #e5e7eb;
+  --popover-foreground: oklch(0.22 0.04 265);
+
+  --primary: oklch(0.4 0.14 264); /* azul LinkedIn */
+  --primary-foreground: oklch(1 0 0); /* branco */
+  --secondary: oklch(0.94 0.01 255);
+  --secondary-foreground: oklch(0.25 0.05 265);
+  --muted: oklch(0.95 0.01 255);
+  --muted-foreground: oklch(0.5 0.03 265);
+
+  --accent: oklch(0.96 0.02 250);
+  --accent-foreground: oklch(0.2 0.05 265);
+  --destructive: oklch(0.6 0.2 30); /* vermelho suave */
+  --border: oklch(0.93 0.01 255);
+  --input: oklch(0.93 0.01 255);
+  --ring: oklch(0.5 0.05 260);
+
+  --sidebar: oklch(0.98 0.005 255);
+  --sidebar-foreground: oklch(0.22 0.04 265);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  --linkedin-cube-face-bg: oklch(0.9 0.13 220 / 0.3);
+  --linkedin-cube-face-border: oklch(0.75 0.15 230 / 0.7);
+  --linkedin-icon-color: oklch(0.35 0.15 260);
 }
 
+/* Modo escuro - mais suave e com bom contraste */
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
-  
-  /* LinkedIn Cube dark mode variables from second file */
-  --linkedin-cube-face-bg: oklch(0.6 0.15 217.41 / 0.4);
-  --linkedin-cube-face-border: oklch(0.69 0.19 220.93 / 0.8);
-  --linkedin-icon-color: oklch(0.75 0.16 245.94);
+  --background: oklch(0.2 0.05 260);
+  --foreground: oklch(0.98 0.005 255);
+  --card: oklch(0.26 0.06 265);
+  --card-foreground: oklch(0.98 0.005 255);
+  --primary: oklch(0.6 0.15 250);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.35 0.04 260);
+  --secondary-foreground: oklch(0.98 0.005 255);
+  --muted: oklch(0.28 0.03 260);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --accent: oklch(0.4 0.04 260);
+  --accent-foreground: oklch(0.98 0.005 255);
+  --destructive: oklch(0.6 0.2 20);
+  --border: oklch(0.3 0.01 260);
+  --input: oklch(0.3 0.01 260);
+  --ring: oklch(0.5 0.02 260);
 }
 
 @layer base {
