@@ -5,8 +5,8 @@ import { Button } from './ui/button';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const socialLinks = [
-  { platform: 'LinkedIn', url: 'https://www.linkedin.com/in/felipecataneo/', icon: FaLinkedin },
-  { platform: 'GitHub', url: 'https://github.com/felipecataneo', icon: FaGithub },
+  { platform: 'LinkedIn', url: 'https://www.linkedin.com/in/felipe-biava-cataneo-b66a7625/', icon: FaLinkedin },
+  { platform: 'GitHub', url: 'https://github.com/Felipecataneo/', icon: FaGithub },
 ];
 
 const SocialLinks: React.FC = () => {

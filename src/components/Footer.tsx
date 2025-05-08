@@ -1,4 +1,3 @@
-// src/components/Footer.tsx
 'use client';
 
 import React from 'react';
@@ -14,6 +13,11 @@ export function Footer() {
   const footerContent = content[language].footer;
   const resumeFileName = language === 'pt' ? 'curriculum-pt.pdf' : 'curriculum-en.pdf';
   const resumePath = `/resumes/${resumeFileName}`;
+  
+  // Formatar o número de telefone para o WhatsApp (remover caracteres não numéricos)
+  const whatsappNumber = footerContent.phone.replace(/\D/g,'');
+  // Criar a URL do WhatsApp com o número formatado
+  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
 
   return (
     <footer className="mt-12 md:mt-20 p-6 bg-secondary dark:bg-secondary text-secondary-foreground dark:text-secondary-foreground rounded-t-lg shadow-inner">
@@ -24,14 +28,16 @@ export function Footer() {
             href={`mailto:${footerContent.email}`} 
             className="flex items-center hover:text-primary dark:hover:text-primary transition-colors"
           >
-            <Mail className="w-4 h-4 mr-2 shrink-0 text-brand-cyan-default" /> {/* Usar cor de acento para ícones aqui */}
+            <Mail className="w-4 h-4 mr-2 shrink-0 text-brand-cyan-default" />
             {footerContent.email}
           </a>
           <a 
-            href={`tel:${footerContent.phone.replace(/\D/g,'')}`} 
+            href={whatsappUrl} 
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center hover:text-primary dark:hover:text-primary transition-colors"
           >
-            <Phone className="w-4 h-4 mr-2 shrink-0 text-brand-cyan-default" /> {/* Usar cor de acento para ícones aqui */}
+            <Phone className="w-4 h-4 mr-2 shrink-0 text-brand-cyan-default" />
             {footerContent.phone}
           </a>
         </div>
@@ -39,13 +45,12 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
           <LanguageSwitcher />
           <Button 
-            variant="outline" // Mudar para outline para melhor contraste com o fundo do footer
+            variant="outline"
             size="sm" 
             asChild
-            // Remover classes de cor customizadas, deixar o variant="outline" cuidar disso
           >
             <a href={resumePath} download={resumeFileName} className="flex items-center">
-              <Download className="w-4 h-4 mr-2 shrink-0 text-brand-cyan-default" /> {/* Usar cor de acento para ícones aqui */}
+              <Download className="w-4 h-4 mr-2 shrink-0 text-brand-cyan-default" />
               <span>{footerContent.downloadResume}</span>
             </a>
           </Button>
