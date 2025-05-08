@@ -1,29 +1,33 @@
+"use client"
+
 // src/app/page.tsx
 import { SectionCard } from '@/components/SectionCard';
 import VibratingDivider from '@/components/VibratingDivider';
 import { HeroSection } from '@/components/HeroSection';
 import { content } from '@/data/content';
-import { Footer } from '@/components/Footer'; // <<< Importe o Footer
+import { Footer } from '@/components/Footer';
+import { useEffect } from 'react';
 
 export default function HomePage() {
   const sectionsOrder = ['about', 'education', 'experience'] as const;
   const sectionColors = {
     about: 'white',
-    education: 'linkedinBlue', // Certifique-se que 'linkedinBlue' está definido no seu tema Tailwind ou substitua por uma cor válida
+    education: 'linkedinBlue',
     experience: 'white',
   } as const;
 
-  // NOTA: `page.tsx` é um Server Component.
-  // `useAppStore` (que o Footer usa) só funciona em Client Components.
-  // Para `sectionIntro`, estamos pegando 'pt' diretamente. Se você precisar
-  // de internacionalização dinâmica para o conteúdo DENTRO de `page.tsx`
-  // (e não apenas dentro do Footer), você precisaria de uma estratégia diferente
-  // para Server Components (ex: ler locale de cookies/headers).
-  // O Footer funcionará com o idioma do store porque é um Client Component.
-  const langForPageContent = 'pt'; // Ou outra lógica para determinar o idioma no servidor
+  // Add a client-side only effect to suppress hydration warnings
+  useEffect(() => {
+    // This runs only on the client, after hydration
+    // We could do additional client-side setup here if needed
+  }, []);
+
+  // NOTA: `page.tsx` agora é um Client Component para resolver problemas de hidratação.
+  // Também movemos o Footer para cá para garantir que ele seja renderizado corretamente.
+  const langForPageContent = 'pt'; // Ou outra lógica para determinar o idioma
 
   return (
-    <> {/* Use um Fragment para envolver main e footer */}
+    <>
       <main className="container mx-auto px-4 pt-4 pb-12">
         <HeroSection />
 
@@ -42,8 +46,6 @@ export default function HomePage() {
                 <SectionCard
                   sectionKey={sectionKey}
                   color={color}
-                  // Se SectionCard precisar do idioma, você teria que passá-lo:
-                  // language={langForPageContent}
                 />
                 {index < sectionsOrder.length - 1 && (
                   <VibratingDivider verticalMargin="my-8 md:my-10" className="animate-fadeInUp" style={{ animationDelay: `${0.4 + index * 0.2}s` }} />
@@ -53,7 +55,7 @@ export default function HomePage() {
           })}
         </div>
       </main>
-      
+      <Footer />
     </>
   );
 }

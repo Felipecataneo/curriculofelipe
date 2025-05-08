@@ -1,4 +1,3 @@
-// src/components/SocialLinks.tsx
 'use client';
 
 import React from 'react';
@@ -10,17 +9,25 @@ const socialLinks = [
   { platform: 'GitHub', url: 'https://github.com/felipecataneo', icon: FaGithub },
 ];
 
-
 const SocialLinks: React.FC = () => {
   return (
     <div className="flex justify-center md:justify-start space-x-4">
-      {socialLinks.map((link) => (
-        <Button key={link.platform} variant="ghost" size="icon" asChild>
-          <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.platform}>
-            <link.icon className="w-5 h-5 text-gray-700 dark:text-brand-cyan-light hover:text-brand-blue-dark transition-colors" />
-          </a>
-        </Button>
-      ))}
+      {socialLinks.map((link) => {
+        const Icon = link.icon;
+        return (
+          <Button key={link.platform} variant="ghost" size="icon" asChild>
+            <a 
+              href={link.url} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label={link.platform}
+              className="flex items-center justify-center"
+            >
+              <Icon className="w-5 h-5 text-gray-700 dark:text-brand-cyan-light hover:text-brand-blue-dark transition-colors" />
+            </a>
+          </Button>
+        );
+      })}
     </div>
   );
 };
