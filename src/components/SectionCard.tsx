@@ -1,40 +1,27 @@
+// src/components/SectionCard.tsx
 'use client';
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+// Remove AnimatePresence import
+// Remove motion import
 import { cn } from '@/lib/utils';
 import { useAppStore, SectionColor } from '@/store';
 import { content, SectionKey } from '@/data/content';
 import {
   Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
+  DialogContent, // Keep
+  DialogHeader, // Keep
+  DialogTitle, // Keep
+  DialogDescription, // Keep
+  DialogTrigger, // Keep
+  DialogFooter, // Keep
+  DialogClose, // Keep
 } from '@/components/ui/dialog';
 import { Button } from './ui/button';
 import { User, GraduationCap, Briefcase, Link } from 'lucide-react';
 
-// --- ANIMAÇÃO DO MODAL ---
-const modalVariants = {
-  hidden: { opacity: 0, scale: 0.96, y: 32 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] }
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.97,
-    y: 24,
-    transition: { duration: 0.26, ease: [0.4, 0, 1, 1] }
-  }
-};
+// Remove modalVariants
 
 interface SectionCardProps {
   sectionKey: SectionKey;
@@ -54,12 +41,25 @@ export function SectionCard({ sectionKey, color }: SectionCardProps) {
   const currentData = content[language].sections[sectionKey];
   const IconComponent = sectionIcons[sectionKey];
 
-  const bgColor = color === 'white' ? 'bg-card dark:bg-brand-gray-dark' : 'bg-brand-blue-DEFAULT';
-  const textColor = color === 'white' ? 'text-card-foreground dark:text-brand-gray-text' : 'text-white';
-  const hoverBgColor =
-    color === 'white'
-      ? 'hover:bg-accent/50 dark:hover:bg-brand-gray-medium'
-      : 'hover:bg-brand-blue-dark';
+  // Definindo cores baseadas na prop 'color' e nas novas variáveis CSS
+  const cardStyles = {
+    white: {
+      bg: 'bg-card dark:bg-card', // Card usa seu próprio fundo
+      text: 'text-card-foreground dark:text-card-foreground',
+      hoverBg: 'hover:bg-accent dark:hover:bg-accent',
+      detailsText: 'text-muted-foreground dark:text-muted-foreground', // Para o texto do parágrafo
+      iconColor: 'text-primary dark:text-primary' // Ícones no card branco usarão a cor primária
+    },
+    linkedinBlue: {
+      bg: 'bg-primary dark:bg-primary',
+      text: 'text-primary-foreground dark:text-primary-foreground',
+      hoverBg: 'hover:bg-primary/90 dark:hover:bg-primary/90', // Um pouco mais escuro no hover
+      detailsText: 'text-primary-foreground/80 dark:text-primary-foreground/80', // Detalhes com leve opacidade
+      iconColor: 'text-primary-foreground dark:text-primary-foreground' // Ícones no card azul usarão a cor de texto do primário
+    },
+  };
+
+  const currentStyle = cardStyles[color];
 
   const handleMouseEnter = () => setProfileImageBasedOnColor(color);
   const handleMouseLeave = () => {
@@ -74,15 +74,15 @@ export function SectionCard({ sectionKey, color }: SectionCardProps) {
   return (
     <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
       <DialogTrigger asChild>
-        <motion.div
+        <div // Era motion.div, mas a animação de entrada da página já cuida disso
           className={cn(
-            'relative p-6 md:p-8 rounded-lg shadow-md cursor-pointer group border border-transparent',
-            'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-cyan-light',
-            bgColor,
-            textColor,
-            hoverBgColor,
+            'relative p-6 md:p-8 rounded-lg shadow-md cursor-pointer group border', // Adicionado border para melhor definição
+            'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring', // Usando --ring para foco
+            currentStyle.bg,
+            currentStyle.text,
+            currentStyle.hoverBg,
             hoverScaleEffect,
-            'overflow-hidden'
+            'overflow-hidden border-border dark:border-border' // Usando a cor de borda padrão
           )}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -91,76 +91,60 @@ export function SectionCard({ sectionKey, color }: SectionCardProps) {
           aria-haspopup="dialog"
           aria-label={`Abrir detalhes sobre ${currentData.title}`}
         >
-          {/* Conteúdo visível do card */}
           <h2 className="text-xl md:text-2xl font-semibold mb-2 flex items-center gap-3">
             {IconComponent && (
-              <IconComponent className="w-6 h-6 shrink-0 text-brand-cyan-light" />
+              <IconComponent className={cn("w-6 h-6 shrink-0", currentStyle.iconColor)} />
             )}
             {currentData.title}
           </h2>
           <p
             className={cn(
               'text-sm mt-2 line-clamp-2',
-              color === 'white'
-                ? 'text-gray-700 dark:text-brand-gray-lightest'
-                : 'text-brand-cyan-light'
+              currentStyle.detailsText
             )}
           >
             {currentData.details.split('\n')[0]}
           </p>
-
-          {/* Animação Hover LinkedIn Logo */}
           <div className={linkedInLogoAnimation}>
             <img
               src="/images/linkedin-logo.svg"
               alt="LinkedIn Logo"
-              className="w-12 h-12 md:w-16 md:h-16 invert opacity-80"
+              className="w-12 h-12 md:w-16 md:h-16 invert opacity-80" // 'invert' pode precisar de ajuste dependendo do logo
             />
           </div>
-        </motion.div>
+        </div>
       </DialogTrigger>
 
-      {/* Modal animado! */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <DialogContent
-            asChild
-            className="sm:max-w-[625px] top-[15%] translate-y-[-15%] dark:bg-brand-gray-darkest dark:text-brand-gray-text border dark:border-brand-gray-medium"
-            onCloseAutoFocus={(e) => e.preventDefault()}
-          >
-            <motion.div
-              key="modern-modal"
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={modalVariants}
-            >
-              <DialogHeader>
-                <DialogTitle className="text-2xl flex items-center gap-3 dark:text-white">
-                  {IconComponent && (
-                    <IconComponent className="w-7 h-7 shrink-0 text-brand-cyan-light" />
-                  )}
-                  {currentData.title}
-                </DialogTitle>
-                <DialogDescription className="whitespace-pre-wrap pt-4 text-base dark:text-brand-gray-lightest leading-relaxed">
-                  {currentData.details}
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter className="sm:justify-end mt-4">
-                <DialogClose asChild>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    className="dark:bg-brand-gray-medium dark:text-brand-gray-text dark:hover:bg-brand-gray-light dark:hover:text-white"
-                  >
-                    Fechar
-                  </Button>
-                </DialogClose>
-              </DialogFooter>
-            </motion.div>
-          </DialogContent>
-        )}
-      </AnimatePresence>
+      {isModalOpen && (
+        <DialogContent
+          className="sm:max-w-[625px] top-[15%] translate-y-[-15%] bg-background dark:bg-background text-foreground dark:text-foreground border-border dark:border-border" // Modal usa cores de fundo e texto padrão
+          onCloseAutoFocus={(e) => e.preventDefault()}
+        >
+          <>
+            <DialogHeader>
+              <DialogTitle className="text-2xl flex items-center gap-3 text-foreground dark:text-foreground">
+                {IconComponent && (
+                  <IconComponent className="w-7 h-7 shrink-0 text-primary dark:text-primary" /> // Ícone do modal com cor primária
+                )}
+                {currentData.title}
+              </DialogTitle>
+              <DialogDescription className="whitespace-pre-wrap pt-4 text-base text-muted-foreground dark:text-muted-foreground leading-relaxed">
+                {currentData.details}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="sm:justify-end mt-4">
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="secondary" // Botão secundário já deve ter cores boas com as novas vars
+                >
+                  Fechar
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </>
+        </DialogContent>
+      )}
     </Dialog>
   );
 }

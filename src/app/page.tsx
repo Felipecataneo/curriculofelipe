@@ -29,16 +29,16 @@ export default function HomePage() {
   return (
     <>
       <main className="container mx-auto px-4 pt-4 pb-12">
-        <HeroSection />
+        <HeroSection /> {/* max-w-4xl mx-auto */}
 
-        <div className="space-y-8 md:space-y-12 mt-12">
+        {/* Aplicar max-w-4xl mx-auto aqui também se os cards devem ter essa largura */}
+        <div className="space-y-8 md:space-y-12 mt-12 max-w-4xl mx-auto"> 
           {sectionsOrder.map((sectionKey, index) => {
             const sectionData = content[langForPageContent]?.sections?.[sectionKey];
             if (!sectionData) {
               console.warn(`Dados da seção não encontrados para: ${sectionKey} no idioma ${langForPageContent}`);
-              return null; // Ou renderize um fallback
+              return null;
             }
-            const sectionIntro = sectionData.title;
             const color = sectionColors[sectionKey];
 
             return (
@@ -48,7 +48,14 @@ export default function HomePage() {
                   color={color}
                 />
                 {index < sectionsOrder.length - 1 && (
-                  <VibratingDivider verticalMargin="my-8 md:my-10" className="animate-fadeInUp" style={{ animationDelay: `${0.4 + index * 0.2}s` }} />
+                  <VibratingDivider
+                    verticalMargin="my-8 md:my-10"
+                    className="animate-fadeInUp" // Para o fade in do divisor
+                    // Remover w-3/4 md:w-1/2 mx-auto do VibratingDivider e usar w-full
+                    // para que ele pegue a largura do contêiner atual (max-w-4xl)
+                    widthClass="w-full" // Nova prop para controlar a largura
+                    style={{ animationDelay: `${0.4 + index * 0.2}s` }}
+                  />
                 )}
               </div>
             );

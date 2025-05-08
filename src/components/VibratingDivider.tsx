@@ -1,23 +1,25 @@
 // src/components/VibratingDivider.tsx
 import React from 'react';
-import { cn } from '@/lib/utils'; // Importe cn
+import { cn } from '@/lib/utils';
 
 interface VibratingDividerProps {
-  className?: string;
+  className?: string; // Para classes adicionais como animate-fadeInUp
   thickness?: 'px' | '0.5' | '1' | '2';
   color?: string;
-  animationType?: 'reverberate' | 'simple';
-  verticalMargin?: string; // ex: 'my-8', 'my-12', 'my-16'
-  style?: React.CSSProperties; // Permite passar estilos como animationDelay
+  animationType?: 'reverberate' | 'simple'; // Removeremos o hover trigger por enquanto
+  verticalMargin?: string;
+  style?: React.CSSProperties;
+  widthClass?: string; // Nova prop para largura, ex: "w-full", "w-3/4 mx-auto"
 }
 
 const VibratingDivider: React.FC<VibratingDividerProps> = ({
-  className, // Remove o valor padrão para usar cn
+  className,
   thickness = 'px',
-  color = 'bg-gray-700 dark:bg-brand-gray-medium', // Cor padrão sutil para o tema escuro, ajustado
+  color = 'bg-gray-300 dark:bg-brand-gray-medium', // Cor sutil
   animationType = 'reverberate',
-  verticalMargin = 'my-16 md:my-20', // Espaçamento padrão entre seções
-  style, // Recebe o style prop
+  verticalMargin = 'my-16 md:my-20',
+  style,
+  widthClass = 'w-3/4 md:w-1/2 mx-auto', // Largura padrão se não especificada
 }) => {
   const thicknessClasses = {
     px: 'h-px',
@@ -26,25 +28,24 @@ const VibratingDivider: React.FC<VibratingDividerProps> = ({
     '2': 'h-2',
   };
 
-  const animationClass = animationType === 'reverberate'
-    ? 'group-hover/divider:animate-reverberate-on-hover' // Use group/divider
-    : 'group-hover/divider:animate-vibrate-simple-on-hover'; // Use group/divider
+  const hoverAnimationClass = animationType === 'reverberate'
+    ? 'hover:animate-reverberate-on-hover' // Tailwind v4 deve gerar animate-reverberate-on-hover
+    : 'hover:animate-vibrate-simple-on-hover'; // Tailwind v4 deve gerar animate-vibrate-simple-on-hover
+
 
   return (
-    // Adicione um div pai com a classe 'group/divider'
-    <div className={cn(`w-3/4 md:w-1/2 mx-auto ${verticalMargin} group/divider`, className)} style={style}>
+    // O div externo agora controla a margem vertical e a largura
+    <div className={cn(widthClass, verticalMargin, className)} style={style}>
        <div
          role="separator"
          aria-orientation="horizontal"
-         className={`
-           w-full h-full
-           ${thicknessClasses[thickness] || 'h-px'}
-           ${color}
-           transform-gpu
-           cursor-pointer
-           rounded-full
-           ${animationClass}
-         `}
+         className={cn(
+           `w-full`, // A barra em si sempre terá 100% da largura do seu pai (o div acima)
+           thicknessClasses[thickness] || 'h-px',
+           color,
+           'rounded-full',
+           hoverAnimationClass
+         )}
        />
     </div>
   );

@@ -1,49 +1,70 @@
 /* src/app/globals.css */
-@import "tailwindcss";
-@import "tw-animate-css";
+@import "tailwindcss"; /* Core do Tailwind v4 */
+@import "tw-animate-css"; /* Para suas animações customizadas adicionais se não cobertas pelo @theme */
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *)); /* Correto para o dark mode */
 
 @theme inline {
+  /* Variáveis de Cores para Utilitários Tailwind */
+  /* O Tailwind v4 usará estas para gerar classes como bg-background, text-primary, etc. */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground); /* Adicionado para consistência */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Cores da Marca (Estas também gerarão utilitários como bg-brand-cyan-light) */
+  --color-brand-cyan-light: var(--brand-cyan-light);
+  --color-brand-cyan-default: var(--brand-cyan-default);
+  --color-brand-cyan-dark: var(--brand-cyan-dark);
+
+  --color-brand-blue-light: var(--brand-blue-light);
+  --color-brand-blue-default: var(--brand-blue-default);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+
+  --color-brand-gray-darkest: var(--brand-gray-darkest);
+  --color-brand-gray-dark: var(--brand-gray-dark);
+  --color-brand-gray-medium: var(--brand-gray-medium);
+  --color-brand-gray-light: var(--brand-gray-light);
+  --color-brand-gray-lightest: var(--brand-gray-lightest);
+  --color-brand-gray-text: var(--brand-gray-text);
+
+  /* Cores do Cubo (para bg-linkedin-cube-face-bg, etc.) */
+  --color-linkedin-cube-face-bg: var(--linkedin-cube-face-bg);
+  --color-linkedin-cube-face-border: var(--linkedin-cube-face-border);
+  --color-linkedin-icon-color: var(--linkedin-icon-color);
+  
+  /* Cores do Gráfico */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Fontes (se você quiser utilitários como font-sans, font-mono) */
+  /* --font-sans: var(--font-inter); (Exemplo, você já tem --font-inter no layout) */
+
+  /* Radius (para rounded-lg, etc., se não estiverem sendo gerados como esperado) */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  
-  /* Keyframes from the second file */
+  --radius-xl: calc(var(--radius) + 4px); /* Adicionado para consistência */
+
+  /* Keyframes */
   @keyframes reverberate {
     0%, 100% { transform: translateY(0) rotate(0deg) scaleY(1); }
     25% { transform: translateY(-1.5px) rotate(-0.2deg) scaleY(1.03); }
@@ -55,109 +76,156 @@
     20%, 80% { transform: translateY(-1px); }
     40%, 60% { transform: translateY(1px); }
   }
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes rotateCube {
-    0% { transform: rotateX(-20deg) rotateY(-30deg) rotateZ(0deg); }
-    100% { transform: rotateX(-20deg) rotateY(330deg) rotateZ(0deg); }
-  }
   
-  /* Animation definitions */
+  /* Animações (para animate-reverberate-on-hover, etc.) */
   --animation-reverberate-on-hover: reverberate 0.15s linear infinite;
   --animation-vibrate-simple-on-hover: vibrateSimple 0.1s linear infinite;
   --animation-fade-in-up: fadeInUp 0.3s ease-out forwards;
   --animation-cube-spin: rotateCube 15s infinite linear;
   
-  /* Screen sizes */
+  /* Screens (para 2xl: variant) */
   --screens-2xl: 1400px;
+
+  /* Container (para classe .container) - Tailwind v4 pode lidar com isso de forma diferente */
+  /* Se o .container não estiver funcionando, você pode precisar definir explicitamente aqui */
+  /* ou usar classes de largura máxima e margem. */
+  /* Exemplo: */
+  /* .container { */
+  /*   width: 100%; */
+  /*   margin-left: auto; */
+  /*   margin-right: auto; */
+  /*   padding-left: 2rem; */
+  /*   padding-right: 2rem; */
+  /* } */
+  /* @media (min-width: theme(screens.2xl)) { */
+  /*   .container { max-width: theme(screens.2xl); } */
+  /* } */
+
 }
 
+/* Definições de Variáveis CSS Globais (como antes) */
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.99 0.01 240); /* quase branco azulado */
-  --foreground: oklch(0.22 0.04 265); /* azul neutro para texto */
+
+  /* === Light Theme === */
+  --background: oklch(0.98 0.005 230);
+  --foreground: oklch(0.25 0.03 240);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.04 265);
+  --card-foreground: var(--foreground);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.04 265);
-
-  --primary: oklch(0.4 0.14 264); /* azul LinkedIn */
-  --primary-foreground: oklch(1 0 0); /* branco */
-  --secondary: oklch(0.94 0.01 255);
-  --secondary-foreground: oklch(0.25 0.05 265);
-  --muted: oklch(0.95 0.01 255);
-  --muted-foreground: oklch(0.5 0.03 265);
-
-  --accent: oklch(0.96 0.02 250);
-  --accent-foreground: oklch(0.2 0.05 265);
-  --destructive: oklch(0.6 0.2 30); /* vermelho suave */
-  --border: oklch(0.93 0.01 255);
-  --input: oklch(0.93 0.01 255);
-  --ring: oklch(0.5 0.05 260);
-
-  --sidebar: oklch(0.98 0.005 255);
-  --sidebar-foreground: oklch(0.22 0.04 265);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--accent);
-  --sidebar-accent-foreground: var(--accent-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
-
-  --linkedin-cube-face-bg: oklch(0.9 0.13 220 / 0.3);
-  --linkedin-cube-face-border: oklch(0.75 0.15 230 / 0.7);
-  --linkedin-icon-color: oklch(0.35 0.15 260);
-}
-
-/* Modo escuro - mais suave e com bom contraste */
-.dark {
-  --background: oklch(0.2 0.05 260);
-  --foreground: oklch(0.98 0.005 255);
-  --card: oklch(0.26 0.06 265);
-  --card-foreground: oklch(0.98 0.005 255);
-  --primary: oklch(0.6 0.15 250);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.52 0.16 257);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.35 0.04 260);
-  --secondary-foreground: oklch(0.98 0.005 255);
-  --muted: oklch(0.28 0.03 260);
-  --muted-foreground: oklch(0.7 0.02 260);
-  --accent: oklch(0.4 0.04 260);
-  --accent-foreground: oklch(0.98 0.005 255);
-  --destructive: oklch(0.6 0.2 20);
-  --border: oklch(0.3 0.01 260);
-  --input: oklch(0.3 0.01 260);
-  --ring: oklch(0.5 0.02 260);
+  --secondary: oklch(0.94 0.01 230);
+  --secondary-foreground: oklch(0.35 0.03 240);
+  --muted: oklch(0.92 0.01 230);
+  --muted-foreground: oklch(0.45 0.02 240);
+  --accent: oklch(0.88 0.02 230);
+  --accent-foreground: var(--primary);
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: oklch(1 0 0); /* Variável CSS para destructive-foreground */
+  --border: oklch(0.90 0.015 230);
+  --input: oklch(0.90 0.015 230);
+  --ring: oklch(0.52 0.16 257 / 0.5);
+
+  /* Cores da Marca - Light Theme */
+  --brand-cyan-light: oklch(0.7 0.15 220);
+  --brand-cyan-default: oklch(0.6 0.18 225);
+  --brand-cyan-dark: oklch(0.5 0.2 230);
+  --brand-blue-light: oklch(0.65 0.15 255);
+  --brand-blue-default: var(--primary);
+  --brand-blue-dark: oklch(0.45 0.17 260);
+  --brand-gray-text: var(--foreground);
+  --brand-gray-lightest: oklch(0.96 0.005 230);
+  --brand-gray-light: oklch(0.92 0.01 230);
+  --brand-gray-medium: oklch(0.85 0.015 230);
+  --brand-gray-dark: oklch(0.4 0.02 230);
+  --brand-gray-darkest: oklch(0.2 0.02 230);
+
+  /* LinkedIn Cube - Light Theme */
+  --linkedin-cube-face-bg: oklch(0.92 0.02 250 / 0.2);
+  --linkedin-cube-face-border: oklch(0.8 0.05 250 / 0.4);
+  --linkedin-icon-color: var(--primary);
+
+  /* Cores do Gráfico */
+  --chart-1: oklch(0.7 0.1 50);
+  --chart-2: oklch(0.7 0.1 100);
+  --chart-3: oklch(0.7 0.1 150);
+  --chart-4: oklch(0.7 0.1 200);
+  --chart-5: oklch(0.7 0.1 250);
 }
 
+.dark {
+  /* === Dark Theme === */
+  --background: oklch(0.12 0.02 240);
+  --foreground: oklch(0.90 0.015 230);
+  --card: oklch(0.17 0.025 240);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.15 0.025 240);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.65 0.15 255);
+  --primary-foreground: oklch(0.1 0.01 240);
+  --secondary: oklch(0.22 0.03 240);
+  --secondary-foreground: oklch(0.85 0.015 230);
+  --muted: oklch(0.25 0.03 240);
+  --muted-foreground: oklch(0.65 0.01 230);
+  --accent: oklch(0.28 0.035 240);
+  --accent-foreground: var(--primary);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.95 0.01 230); /* Variável CSS para destructive-foreground */
+  --border: oklch(0.25 0.03 240);
+  --input: oklch(0.25 0.03 240);
+  --ring: oklch(0.65 0.15 255 / 0.6);
+
+  /* Cores da Marca - Dark Theme */
+  --brand-cyan-light: oklch(0.75 0.14 225);
+  --brand-cyan-default: oklch(0.65 0.17 230);
+  --brand-cyan-dark: oklch(0.55 0.19 235);
+  --brand-blue-light: oklch(0.7 0.14 250);
+  --brand-blue-default: var(--primary);
+  --brand-blue-dark: oklch(0.55 0.16 260);
+  --brand-gray-text: var(--foreground);
+  --brand-gray-lightest: oklch(0.8 0.01 230);
+  --brand-gray-light: oklch(0.6 0.01 230);
+  --brand-gray-medium: oklch(0.35 0.02 230);
+  --brand-gray-dark: oklch(0.20 0.025 240);
+  --brand-gray-darkest: oklch(0.15 0.025 240);
+
+  /* LinkedIn Cube - Dark Theme */
+  --linkedin-cube-face-bg: oklch(0.3 0.05 250 / 0.3);
+  --linkedin-cube-face-border: oklch(0.5 0.08 250 / 0.5);
+  --linkedin-icon-color: var(--brand-cyan-light);
+}
+
+/* Camadas base e de componentes (como antes) */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50; /* Estes utilitários DEVEM ser gerados pelo @theme */
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground; /* Estes utilitários DEVEM ser gerados pelo @theme */
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* Component layer from second file */
 @layer components {
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-brand-cyan-light)] to-[var(--color-brand-blue-light)];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan-default to-brand-blue-default; /* Usando os nomes dos utilitários gerados */
   }
+  /* Verifique se a classe container é necessária ou se você usa max-w-* e mx-auto */
+  .container {
+    @apply w-full mx-auto px-8; /* px-8 é 2rem se 1rem=16px. Ajuste conforme padding desejado */
+  }
+  /* Se você tinha um max-width para container: */
+  /* .container { */
+  /*   max-width: theme('screens.2xl', '1400px'); /* Acessa o valor de --screens-2xl ou usa fallback */
+  /* } */
+
 }
 
-/* Custom scrollbar styles from second file */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-brand-gray-dark);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-brand-cyan-DEFAULT);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-brand-cyan-light);
-}
+/* Scrollbar (como antes) */
+::-webkit-scrollbar { /* ... */ }
+::-webkit-scrollbar-track { /* ... */ }
+.dark ::-webkit-scrollbar-track { /* ... */ }
+::-webkit-scrollbar-thumb { /* ... */ }
+::-webkit-scrollbar-thumb:hover { /* ... */ }
