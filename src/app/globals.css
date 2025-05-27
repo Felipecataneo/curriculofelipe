@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *)); /* Correto para o dark mode */
 
 @theme inline {
+  --breakpoint-xl: 90rem
   /* Variáveis de Cores para Utilitários Tailwind */
   /* O Tailwind v4 usará estas para gerar classes como bg-background, text-primary, etc. */
   --color-background: var(--background);
