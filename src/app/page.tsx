@@ -53,7 +53,7 @@ export default function HomePage() {
           <header 
             className="
               bg-background/80 dark:bg-background/80 shadow-sm 
-              md:sticky md:top-0 md:z-40 md:backdrop-blur-md 
+              lg:sticky lg:top-0 lg:z-40 lg:backdrop-blur-md 
               w-full 
             "
           >
